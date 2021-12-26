@@ -28,7 +28,7 @@ function onStartClick() {
 }
 
 function onStopClick() {
-	refs.start.removeAttribute('disabled', true);
+	refs.start.removeAttribute('disabled');
 	refs.stop.setAttribute('disabled', true);
 
 	clearInterval(promId);
