@@ -7,6 +7,10 @@ let intervalId = null;
 const refs = {
 	calendar: document.querySelector('#datetime-picker'),
 	startTimer: document.querySelector('[data-start]'),
+	timerDay: document.querySelector('[data-days]'),
+	timerHour: document.querySelector('[data-hours]'),
+	timerMinute: document.querySelector('[data-minutes]'),
+	timerSecond: document.querySelector('[data-seconds]'),
 	options: {
 		enableTime: true,
 		time_24hr: true,
@@ -23,19 +27,20 @@ const refs = {
 	}
 }
 
-flatpickr("#datetime-picker", refs.options)
+flatpickr("#datetime-picker", refs.options);
 
-refs.startTimer.addEventListener('click', onStartClick)
-
+refs.startTimer.addEventListener('click', onStartClick);
 
 function onStartClick() {
 	refs.startTimer.setAttribute('disabled', true)
 	console.log(date);
 	intervalId = setInterval(() => {
-		console.log(convertMs(date - Date.now()))
+		const deltaTime = date - Date.now();
+		const time = convertMs(deltaTime);
+
+		updateClock(time)
 	}, 1000)
 }
-
 
 function convertMs(ms) {
 	const second = 1000;
@@ -43,10 +48,21 @@ function convertMs(ms) {
 	const hour = minute * 60;
 	const day = hour * 24;
 
-	const days = Math.floor(ms / day);
-	const hours = Math.floor((ms % day) / hour);
-	const minutes = Math.floor(((ms % day) % hour) / minute);
-	const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+	const days = pad(Math.floor(ms / day));
+	const hours = pad(Math.floor((ms % day) / hour));
+	const minutes = pad(Math.floor(((ms % day) % hour) / minute));
+	const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
 
 	return { days, hours, minutes, seconds };
+}
+
+function pad(value) {
+	return String(value).padStart(2, '0')
+}
+
+function updateClock({ days, hours, minutes, seconds }) {
+	refs.timerDay.textContent = `${days}`;
+	refs.timerHour.textContent = `${hours}`;
+	refs.timerMinute.textContent = `${minutes}`;
+	refs.timerSecond.textContent = `${seconds}`;
 }
