@@ -34,13 +34,16 @@ flatpickr("#datetime-picker", refs.options);
 refs.startTimer.addEventListener('click', onStartClick);
 
 function onStartClick() {
-	refs.startTimer.setAttribute('disabled', true)
-	console.log(date);
+	refs.startTimer.setAttribute('disabled', true);
+
 	intervalId = setInterval(() => {
 		const deltaTime = date - Date.now();
 		const time = convertMs(deltaTime);
 
-		updateClock(time)
+		if (date <= Date.now()) {
+			clearInterval(intervalId)
+		} else (updateClock(time))
+
 	}, 1000)
 }
 
