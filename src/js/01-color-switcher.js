@@ -19,12 +19,9 @@ function onStartClick() {
 	refs.start.setAttribute('disabled', true);
 	refs.stop.removeAttribute('disabled');
 
-	new Promise(resolve => {
-		promId = setInterval(() => {
-			resolve(refs.body.style.backgroundColor = getRandomColor())
-		}, 1000)
-	}
-	)
+	promId = setInterval(() => {
+		resolve(refs.body.style.backgroundColor = getRandomColor())
+	}, 1000)
 }
 
 function onStopClick() {
