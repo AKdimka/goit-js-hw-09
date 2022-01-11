@@ -20,7 +20,7 @@ function onStartClick() {
 	refs.stop.removeAttribute('disabled');
 
 	promId = setInterval(() => {
-		resolve(refs.body.style.backgroundColor = getRandomColor())
+		refs.body.style.backgroundColor = getRandomColor()
 	}, 1000)
 }
 
